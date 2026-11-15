@@ -1,5 +1,6 @@
 import { convertFileSrc, invoke } from '@tauri-apps/api/core'
 import type { Doc } from './types/Doc'
+import type { License } from './types/License'
 import type { Prefs } from './types/Prefs'
 
 export const imageSrc = (id: number) => convertFileSrc(String(id), 'miso-img')
@@ -30,6 +31,10 @@ export function resetPrefs(): Promise<Prefs> {
 
 export function listFonts(): Promise<string[]> {
   return invoke<string[]>('list_fonts')
+}
+
+export function getLicenses(): Promise<License[]> {
+  return invoke<License[]>('get_licenses')
 }
 
 export function openFromClipboard(): Promise<void> {

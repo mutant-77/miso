@@ -11,7 +11,7 @@ use crate::export;
 use crate::file_id::DocKey;
 use crate::i18n;
 use crate::import::file_name;
-use crate::model::Doc;
+use crate::model::{Doc, License};
 use crate::positions::{PositionsState, now_ms};
 use crate::prefs::{self, Prefs, PrefsState};
 
@@ -148,6 +148,18 @@ pub async fn list_fonts() -> Vec<String> {
         .unwrap_or_default()
 }
 
+#[tauri::command]
+pub fn get_licenses() -> Vec<License> {
+    crate::licenses_data::ENTRIES
+        .iter()
+        .map(|(title, kind, body)| License {
+            title: title.to_string(),
+            kind: kind.to_string(),
+            body: body.replace("\r\n", "\n"),
+        })
+        .collect()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -175,5 +187,15 @@ mod tests {
     fn con_clave_con_punto_corta_solo_la_extension() {
         let clave = clave("/libros/tomo.v2.epub");
         assert_eq!(nombre_propuesto(Some(&clave), "Tomo 2"), "tomo.v2");
+    }
+
+    #[test]
+    fn avisos_completos_y_normalizados() {
+        let avisos = get_licenses();
+        assert!(!avisos.is_empty());
+        assert!(avisos.iter().all(|a| !a.title.is_empty() && !a.body.is_empty()));
+        assert!(avisos.iter().all(|a| !a.body.contains('\r')));
+        assert!(avisos.iter().any(|a| a.title == "Miso"));
+        assert!(avisos.iter().any(|a| a.title == "PDFium"));
     }
 }

@@ -14,3 +14,7 @@ Pendientes diferidos y deuda técnica secundaria. Brevedad ante todo: una línea
 - 2026-11-14 — EPUB: un manifiesto con `media-type` no estándar (`image/jpg`) omite la imagen (C8 del plan EPUB); aceptarlo si aparece en libros reales. Sin fase.
 - 2026-11-14 — Imágenes en DOCX (`document.xml.rels` + `a:blip`) y en HTML suelto (archivos vecinos al elegido). Sin fase.
 - 2026-11-11 07:20 — `vitest.config.ts` fuera de Windows: sin `ProgramFiles(x86)` la ruta de EdgeCore queda relativa al proyecto. Inofensivo (D7); arreglo de una línea. Sin fase.
+- 2026-11-15 07:02 — Licencias: recorrido manual en `pnpm tauri dev` (Preferencias → Licencias: 21 entradas, foco en «Volver», seleccionar y copiar, volver, Escape cierra). Pendiente del titular (ver REGISTRO, «Avisos de licencia embebidos»).
+- 2026-11-15 07:02 — Licencias: el control de huérfanos sólo vigila `src-tauri/pdfium/licenses/`; una fuente o binario nuevo con licencia propia fuera de ahí no lo dispara. Sin fase.
+- 2026-11-15 07:02 — `Escape` cierra el panel entero desde la vista de licencias; una pila por vista sería más fina. Sin fase.
+- 2026-11-15 07:02 — La versión vive duplicada en `tauri.conf.json` y `Cargo.toml`. Sin fase.

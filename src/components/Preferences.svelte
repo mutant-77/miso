@@ -3,12 +3,16 @@
   import { setPrefs, resetPrefs, listFonts } from '../lib/ipc/commands'
   import { DARK, LIGHT } from '../lib/theme'
   import { LANGUAGES, t } from '../lib/i18n.svelte'
+  import Licenses from './Licenses.svelte'
 
   type Numeric = 'font_size' | 'column_width' | 'relative_inset' | 'vertical_inset' | 'line_height'
   type Text = 'font_family' | 'background' | 'foreground' | 'language'
 
   let { prefs, onclose }: { prefs: Prefs; onclose: () => void } = $props()
   let form = $state<HTMLFormElement>()
+  let back = $state<HTMLButtonElement>()
+  let view = $state<'prefs' | 'licenses'>('prefs')
+  const heading = $derived(view === 'prefs' ? t('prefs.title') : t('licenses.title'))
   let installed = $state<string[]>([])
   listFonts().then(
     (all) => (installed = all),
@@ -24,6 +28,10 @@
 
   $effect(() => {
     form?.querySelector<HTMLElement>('input, select')?.focus()
+  })
+
+  $effect(() => {
+    back?.focus()
   })
 
   // Repinta con lo que devuelve Rust (el recorte manda aunque el valor no cambie).
@@ -60,70 +68,84 @@
   }
 </script>
 
-<aside class="panel" aria-label={t('prefs.title')}>
+<aside class="panel" aria-label={heading}>
   <header>
-    <h1>{t('prefs.title')}</h1>
+    <div class="titulo">
+      {#if view === 'licenses'}
+        <button type="button" class="volver" bind:this={back} onclick={() => (view = 'prefs')}>{t('licenses.back')}</button>
+      {/if}
+      <h1>{heading}</h1>
+    </div>
     <button type="button" class="cerrar" aria-label={t('prefs.close')} title={t('prefs.closeHint')} onclick={onclose}>✕</button>
   </header>
 
-  <form bind:this={form} onsubmit={(e) => e.preventDefault()}>
-    <section>
-      <h2>{t('prefs.text')}</h2>
-      <label for="fuente">{t('prefs.font')}</label>
-      <select id="fuente" name="font_family" value={prefs.font_family} onchange={(e) => text('font_family', e)}>
-        {#each fonts as font (font)}
-          <option value={font}>{font}</option>
-        {/each}
-      </select>
+  {#if view === 'prefs'}
+    <form bind:this={form} onsubmit={(e) => e.preventDefault()}>
+      <section>
+        <h2>{t('prefs.text')}</h2>
+        <label for="fuente">{t('prefs.font')}</label>
+        <select id="fuente" name="font_family" value={prefs.font_family} onchange={(e) => text('font_family', e)}>
+          {#each fonts as font (font)}
+            <option value={font}>{font}</option>
+          {/each}
+        </select>
 
-      <label for="tamano">{t('prefs.size')}</label>
-      <input id="tamano" name="font_size" type="number" min="8" max="48" step="1" value={prefs.font_size} onchange={(e) => numeric('font_size', e)} />
+        <label for="tamano">{t('prefs.size')}</label>
+        <input id="tamano" name="font_size" type="number" min="8" max="48" step="1" value={prefs.font_size} onchange={(e) => numeric('font_size', e)} />
 
-      <label for="interlineado">{t('prefs.lineHeight')}</label>
-      <input id="interlineado" name="line_height" type="number" min="1" max="2" step="0.05" value={prefs.line_height} onchange={(e) => numeric('line_height', e)} />
-    </section>
+        <label for="interlineado">{t('prefs.lineHeight')}</label>
+        <input id="interlineado" name="line_height" type="number" min="1" max="2" step="0.05" value={prefs.line_height} onchange={(e) => numeric('line_height', e)} />
+      </section>
 
-    <section>
-      <h2>{t('prefs.columns')}</h2>
-      <label for="ancho">{t('prefs.width')}</label>
-      <input id="ancho" name="column_width" type="number" min="200" max="800" step="10" value={prefs.column_width} onchange={(e) => numeric('column_width', e)} />
+      <section>
+        <h2>{t('prefs.columns')}</h2>
+        <label for="ancho">{t('prefs.width')}</label>
+        <input id="ancho" name="column_width" type="number" min="200" max="800" step="10" value={prefs.column_width} onchange={(e) => numeric('column_width', e)} />
 
-      <label for="separacion">{t('prefs.gap')}</label>
-      <input id="separacion" name="relative_inset" type="number" min="0" max="20" step="0.5" value={prefs.relative_inset} onchange={(e) => numeric('relative_inset', e)} />
+        <label for="separacion">{t('prefs.gap')}</label>
+        <input id="separacion" name="relative_inset" type="number" min="0" max="20" step="0.5" value={prefs.relative_inset} onchange={(e) => numeric('relative_inset', e)} />
 
-      <label for="margen">{t('prefs.margin')}</label>
-      <input id="margen" name="vertical_inset" type="number" min="0" max="80" step="1" value={prefs.vertical_inset} onchange={(e) => numeric('vertical_inset', e)} />
-    </section>
+        <label for="margen">{t('prefs.margin')}</label>
+        <input id="margen" name="vertical_inset" type="number" min="0" max="80" step="1" value={prefs.vertical_inset} onchange={(e) => numeric('vertical_inset', e)} />
+      </section>
 
-    <section>
-      <h2>{t('prefs.colors')}</h2>
-      <label for="fondo">{t('prefs.background')}</label>
-      <input id="fondo" name="background" type="color" value={prefs.background} onchange={(e) => text('background', e)} />
+      <section>
+        <h2>{t('prefs.colors')}</h2>
+        <label for="fondo">{t('prefs.background')}</label>
+        <input id="fondo" name="background" type="color" value={prefs.background} onchange={(e) => text('background', e)} />
 
-      <label for="texto">{t('prefs.foreground')}</label>
-      <input id="texto" name="foreground" type="color" value={prefs.foreground} onchange={(e) => text('foreground', e)} />
+        <label for="texto">{t('prefs.foreground')}</label>
+        <input id="texto" name="foreground" type="color" value={prefs.foreground} onchange={(e) => text('foreground', e)} />
 
-      <span>{t('prefs.theme')}</span>
-      <div class="temas">
-        <button type="button" onclick={() => theme(LIGHT)} title={t('prefs.themeHint')}>{t('prefs.light')}</button>
-        <button type="button" onclick={() => theme(DARK)} title={t('prefs.themeHint')}>{t('prefs.dark')}</button>
-      </div>
-    </section>
+        <span>{t('prefs.theme')}</span>
+        <div class="temas">
+          <button type="button" onclick={() => theme(LIGHT)} title={t('prefs.themeHint')}>{t('prefs.light')}</button>
+          <button type="button" onclick={() => theme(DARK)} title={t('prefs.themeHint')}>{t('prefs.dark')}</button>
+        </div>
+      </section>
 
-    <section>
-      <h2><label for="idioma">{t('prefs.language')}</label></h2>
-      <select id="idioma" name="language" value={prefs.language} onchange={(e) => text('language', e)}>
-        <option value="auto">{t('prefs.auto')}</option>
-        {#each LANGUAGES as [code, name] (code)}
-          <option value={code} lang={code}>{name}</option>
-        {/each}
-      </select>
-    </section>
+      <section>
+        <h2><label for="idioma">{t('prefs.language')}</label></h2>
+        <select id="idioma" name="language" value={prefs.language} onchange={(e) => text('language', e)}>
+          <option value="auto">{t('prefs.auto')}</option>
+          {#each LANGUAGES as [code, name] (code)}
+            <option value={code} lang={code}>{name}</option>
+          {/each}
+        </select>
+      </section>
 
-    <footer>
-      <button type="button" onclick={() => apply(resetPrefs())}>{t('prefs.reset')}</button>
-    </footer>
-  </form>
+      <section>
+        <h2>{t('prefs.about')}</h2>
+        <button type="button" class="ancho" onclick={() => (view = 'licenses')}>{t('prefs.licenses')}</button>
+      </section>
+
+      <footer>
+        <button type="button" onclick={() => apply(resetPrefs())}>{t('prefs.reset')}</button>
+      </footer>
+    </form>
+  {:else}
+    <Licenses />
+  {/if}
 </aside>
 
 <style>
@@ -152,9 +174,24 @@
     padding: 12px 12px 4px 20px;
   }
 
+  .titulo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+  }
+
   h1 {
     margin: 0;
     font: 600 20px 'Segoe UI Variable Display', 'Segoe UI', sans-serif;
+  }
+
+  .volver {
+    padding: 0 8px;
+  }
+
+  .ancho {
+    grid-column: 1 / -1;
   }
 
   form {

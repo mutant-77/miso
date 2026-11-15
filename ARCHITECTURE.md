@@ -49,7 +49,9 @@ Miso/
 ├─ assets/miso.svg              # fuente del icono (`pnpm tauri icon`)
 ├─ .gitignore / .gitattributes  # LF; fuera de git: Tofu.dmg, rea-tofu-evidence.*, builds
 ├─ .cargo/config.toml           # TS_RS_EXPORT_DIR (en la raíz: Cargo busca la config desde el directorio actual)
-├─ package.json                 # pnpm; scripts dev / build / check / test / test:layout / lint:rust / test:rust / verify
+├─ package.json                 # pnpm; scripts dev / build / check / test / test:layout / lint:rust / test:rust / gen:licenses / check:licenses / verify
+├─ scripts/licenses.mjs         # manifiesto de licencias; genera licenses_data.rs y THIRD_PARTY_NOTICES.md (--check en verify)
+├─ THIRD_PARTY_NOTICES.md       # generado; no editar a mano
 ├─ .npmrc                       # node-linker=hoisted (el volumen es exFAT, sin symlinks)
 ├─ vite.config.ts
 ├─ vitest.config.ts             # proyectos unit (node) y layout (navegador, ver sección 12)
@@ -82,7 +84,8 @@ Miso/
 │     ├─ Reader.svelte          # raíz de la ventana de lectura; carga y escucha prefs, escala de fuente (sin state/ ni theme/)
 │     ├─ Columns.svelte         # contenedor multicol + pintado de bloques (párrafo, heading, lista, cita, imagen)
 │     ├─ FindBar.svelte         # barra flotante arriba a la derecha (Ctrl+F), «n de m»
-│     ├─ Preferences.svelte     # panel lateral superpuesto dentro del lector (Ctrl+,), colores del sistema
+│     ├─ Preferences.svelte     # panel lateral superpuesto dentro del lector (Ctrl+,), colores del sistema; vista «Licencias»
+│     ├─ Licenses.svelte        # avisos de licencia embebidos (get_licenses), seleccionables
 │     ├─ EmptyState.svelte      # "abre un archivo o pega texto"
 │     └─ LoadingOverlay.svelte
 ├─ src-tauri/
@@ -97,6 +100,7 @@ Miso/
 │     ├─ commands.rs            # #[tauri::command] finos; delegan en módulos
 │     ├─ doc_windows.rs         # enrutado de documentos, ventanas, Doc pendiente/abierto por label, imágenes por número (`image_response`)
 │     ├─ model.rs               # Doc, Block, Run (serde + specta/ts-rs para generar types.ts)
+│     ├─ licenses_data.rs       # generado por scripts/licenses.mjs: include_str! de cada licencia
 │     ├─ import/
 │     │  ├─ mod.rs              # despacho (%PDF- → PDF, {\rtf → RTF, zip con container.xml → EPUB, otro zip → DOCX, extensión → HTML, resto → texto), helpers de zip/XML compartidos (entry, attr, entity, corrupt, LIMITE, Parsed), clean, push_run, catch_unwind → Corrupt
 │     │  ├─ plain.rs
@@ -174,6 +178,7 @@ Los importadores corren fuera del hilo principal (`spawn_blocking`), sin excepci
 | `set_prefs` | `Prefs` completo | `Prefs` validado |
 | `reset_prefs` | — | `Prefs` |
 | `list_fonts` | — | `string[]` (familias instaladas, ordenadas, ya válidas para prefs; sin `@` verticales; vacía si DirectWrite falla) |
+| `get_licenses` | — | `License[]` (`title`, `kind` SPDX, `body` con saltos `\n`), embebidos en el `.exe` |
 | `set_position` | `char_index` | — (Rust resuelve la clave por la ventana que llama; sin clave, nada; debounce en Rust) |
 | `save_copy` | — | — (Rust muestra el diálogo de guardado y exporta el `Doc` de la ventana; formato por la extensión elegida: `.rtf` → RTF, si no texto) |
 
@@ -316,6 +321,7 @@ Reader                  fondo, texto, fuente (prefs); {#key doc}
 - **Rust:** enrutado (archivo ya abierto enfoca su ventana; ventana nueva recoge su `Doc` pendiente).
 - **TS (vitest):** `columnWidth` (umbral √2 y múltiplo exacto en ventana normal), `textIndex` (paridad con Rust en UTF-16).
 - **Layout (vitest browser mode vía Playwright con el Edge instalado, `tests/layout/`):** `vitest.config.ts` usa el `msedge.exe` de EdgeCore (el motor de WebView2) si existe y, si no, `channel: 'msedge'`. Sin descargar navegador. `pitch` medido, `columnScroll` (500 saltos sin error acumulado), ancla conservada tras cambiar fuente/ancho/tamaño. **Obligatorios**: jsdom no maqueta y sin ellos la fase 2 no se puede cerrar. Imágenes (`tests/layout/images.test.ts`, URLs `blob:` como `miso-img`, que llega de forma asíncrona): una alta cabe en la altura de columna y una ancha en el ancho; con imágenes antes del ancla, éste queda en la primera columna visible; una columna que empieza con imagen tiene como índice el inicio de su bloque; `measurePitch` correcto con una imagen primera; imagen rota → `hidden` y ancla conservada. Premisas de Chromium para la composición de libro (`multicol.test.ts`): margen truncado en salto no forzado, conservado tras salto forzado, sonda del ancla en sangría y en título centrado, blanco de alto 0; las medidas verticales son el borde del contenido (caja + `padding-block-start`). Composición de libro (`book.svelte.test.ts`): D9, separación, sangría, títulos centrados, sin hueco arriba, capítulos en columna nueva, ancla tras cada cambio de prefs, ancla sobre un blanco, búsqueda y paso.
+- **Licencias:** `pnpm check:licenses` (primera etapa de `verify`) falla si un archivo de `src-tauri/pdfium/licenses/` no está en el manifiesto, si alguno no es UTF-8 o si los artefactos generados no coinciden con sus fuentes.
 - **E2E:** opcional con `tauri-driver`; decidir cuando exista el flujo completo.
 
 ## 13. Plan por fases

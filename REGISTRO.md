@@ -243,3 +243,10 @@ Licencia MIT para Miso y cumplimiento de atribución de PDFium: añadida la carp
 
 - Archivos: `LICENSE`, `THIRD_PARTY_NOTICES.md`, `src-tauri/pdfium/licenses/*`, `README.md`, `ARCHITECTURE.md` (§3), `REGISTRO.md`.
 - Estado: hecho. Pendiente para el empaquetado: adjuntar `THIRD_PARTY_NOTICES.md` al ejecutable distribuido.
+
+## 2026-11-15 — Avisos de licencia embebidos
+
+Los 21 textos de licencia (Miso, Literata, pdfium-binaries, PDFium y sus 17 bibliotecas) viajan en el `.exe` vía `include_str!` y se leen en Preferencias → Acerca de → Licencias (`get_licenses`). Un generador con manifiesto explícito (`scripts/licenses.mjs`) produce `licenses_data.rs` y `THIRD_PARTY_NOTICES.md`; `check:licenses` abre `pnpm verify` y falla ante huérfanos, fuentes no UTF-8 o artefactos desfasados. `freetype.txt` transcodificado de Windows-1252 a UTF-8 (mismo texto). Plan auditado por el orquestador y agy; implementado por agentes Haiku, revisado y ajustado por el orquestador. Verificado: verify verde (Rust 228, unit 114, layout 77; base 226/114/77) y negativas de la puerta. Diferidos: recorrido manual pendiente del titular y tres hallazgos aparcados (`DIFERIDOS.md`).
+
+- Archivos: `scripts/licenses.mjs`, `package.json`, `THIRD_PARTY_NOTICES.md`, `src-tauri/pdfium/licenses/freetype.txt`, `src-tauri/src/{licenses_data,commands,lib,model}.rs`, `src/lib/ipc/types/License.ts`, `src/lib/ipc/commands.ts`, `src/components/{Licenses,Preferences}.svelte`, `locales/*.json`, `ARCHITECTURE.md`, `README.md`, `DIFERIDOS.md`, `REGISTRO.md`, `.historial/_PLAN_LICENCIAS_completado.md`.
+- Estado: hecho y verificado; resuelve el pendiente de la entrada anterior (avisos dentro del ejecutable). Recorrido visual pendiente del titular.

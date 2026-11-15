@@ -96,6 +96,14 @@ impl Run {
     }
 }
 
+#[derive(Serialize, Clone, Debug, TS)]
+#[ts(export)]
+pub struct License {
+    pub title: String,
+    pub kind: String,
+    pub body: String,
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

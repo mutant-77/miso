@@ -6,12 +6,14 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "gen:licenses": "node scripts/licenses.mjs",
+    "check:licenses": "node scripts/licenses.mjs --check",
     "check": "svelte-check --tsconfig ./tsconfig.json --fail-on-warnings",
     "test": "vitest run --project unit",
     "test:layout": "vitest run --project layout",
     "lint:rust": "cargo clippy --manifest-path src-tauri/Cargo.toml --all-targets -- -D warnings",
     "test:rust": "cargo test --manifest-path src-tauri/Cargo.toml",
-    "verify": "pnpm lint:rust && pnpm test:rust && pnpm check && pnpm test && pnpm test:layout",
+    "verify": "pnpm check:licenses && pnpm lint:rust && pnpm test:rust && pnpm check && pnpm test && pnpm test:layout",
     "tauri": "tauri"
   },
   "devDependencies": {

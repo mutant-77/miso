@@ -7,6 +7,7 @@ mod file_id;
 mod fonts;
 mod i18n;
 mod import;
+mod licenses_data;
 mod model;
 mod positions;
 mod prefs;
@@ -68,7 +69,8 @@ pub fn run() {
             commands::get_prefs,
             commands::set_prefs,
             commands::reset_prefs,
-            commands::list_fonts
+            commands::list_fonts,
+            commands::get_licenses
         ])
         .on_window_event(|window, event| match event {
             WindowEvent::Focused(true) if window.label().starts_with("reader-") => {
