@@ -256,7 +256,7 @@ Los 21 textos de licencia (Miso, Literata, pdfium-binaries, PDFium y sus 17 bibl
 SemVer desde 1.0.0 con fuente única en `Cargo.toml` (se quita `version` de `tauri.conf.json`; Tauri la toma de Cargo). Preferencias → Acerca de muestra «Miso 1.0.0» vía `getVersion()` y el permiso `core:app:allow-version`. Reglas de subida y procedimiento en ARCHITECTURE §4; decisión en `DECISIONES.md`. Etiqueta `v1.0.0` local. Verificado: `pnpm verify` verde (unit 114, layout 77, Rust y clippy sin errores).
 
 - Archivos: `src-tauri/{Cargo.toml,Cargo.lock,tauri.conf.json}`, `src-tauri/capabilities/reader.json`, `src/components/Preferences.svelte`, `ARCHITECTURE.md`, `DECISIONES.md`, `DIFERIDOS.md`, `REGISTRO.md`, `.historial/_PLAN_VERSIONADO_completado.md`.
-- Estado: hecho y verificado; resuelve el diferido de la versión duplicada. Pendiente del titular: comprobar Acerca de en `pnpm tauri dev` y compilar `miso.exe` 1.0.0 para la Release (ver `DIFERIDOS.md`).
+- Estado: hecho y verificado; resuelve el diferido de la versión duplicada. Acerca de confirmado por el titular. Pendiente del titular: compilar `miso.exe` 1.0.0 para la Release (ver `DIFERIDOS.md`).
 
 ## 2026-11-15 — Capturas en el README
 
