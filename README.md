@@ -12,6 +12,13 @@ One document per window. No network, no library, no editing — just reading.
 [![Platform](https://img.shields.io/badge/platform-Windows%2010%2F11-0078D4?logo=windows&logoColor=white)](#requirements)
 [![Languages](https://img.shields.io/badge/i18n-11%20languages-6f7a8a)](#languages)
 
+<br />
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/screenshots/miso-dark.png" />
+  <img src="assets/screenshots/miso-light.png" alt="Miso showing a book in three columns" width="860" />
+</picture>
+
 </div>
 
 ---
