@@ -76,4 +76,8 @@ German, English, Spanish, Finnish, French, Italian, Norwegian Bokmål, Dutch, Po
 
 ## Third-party
 
-PDF rendering uses [PDFium](https://pdfium.googlesource.com/pdfium/) (`src-tauri/pdfium/pdfium.dll`, built by [pdfium-binaries](https://github.com/bblanchon/pdfium-binaries)); license in `src-tauri/pdfium/LICENSE`.
+PDF rendering uses [PDFium](https://pdfium.googlesource.com/pdfium/) (`src-tauri/pdfium/pdfium.dll` 158.0.8125.0, built by [pdfium-binaries](https://github.com/bblanchon/pdfium-binaries)). License texts ship in `src-tauri/pdfium/`; see [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
+
+## License
+
+MIT — see [`LICENSE`](LICENSE). Third-party components keep their own licenses, listed in [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).

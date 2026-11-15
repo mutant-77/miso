@@ -90,7 +90,7 @@ Miso/
 │  ├─ tauri.conf.json           # bundle id, CSP; sin instalador ni asociaciones; sin ventanas (las crea Rust)
 │  ├─ capabilities/
 │  │  └─ reader.json            # sólo core (eventos, ventana); sin fs, dialog, clipboard, red ni opener
-│  ├─ pdfium/                   # pdfium.dll x64 (chromium/8125) + LICENSE, versionados; embebida en el .exe
+│  ├─ pdfium/                   # pdfium.dll x64 (chromium/8125) + LICENSE + licenses/, versionados; embebida en el .exe
 │  └─ src/
 │     ├─ main.rs
 │     ├─ lib.rs                 # builder, plugins (dialog, log, single-instance), registro de comandos, protocolo `miso-img`, panic hook

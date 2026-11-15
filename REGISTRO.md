@@ -236,3 +236,10 @@ README reescrito en inglés y con más rigor: cabecera centrada con el logo (`as
 
 - Archivos: `.gitignore`, `REGISTRO.md`.
 - Estado: hecho y publicado.
+
+## 2026-11-15 — Licencia MIT y avisos de terceros
+
+Licencia MIT para Miso y cumplimiento de atribución de PDFium: añadida la carpeta `licenses/` del release `chromium/8125` de `pdfium-binaries` (18 textos, el DLL verificado por hash como el mismo binario) y `THIRD_PARTY_NOTICES.md` con el inventario. Todas las licencias son permisivas (BSD, MIT, Apache-2.0, FTL, Unicode); ninguna impone copyleft sobre el código propio.
+
+- Archivos: `LICENSE`, `THIRD_PARTY_NOTICES.md`, `src-tauri/pdfium/licenses/*`, `README.md`, `ARCHITECTURE.md` (§3), `REGISTRO.md`.
+- Estado: hecho. Pendiente para el empaquetado: adjuntar `THIRD_PARTY_NOTICES.md` al ejecutable distribuido.
