@@ -257,3 +257,10 @@ SemVer desde 1.0.0 con fuente única en `Cargo.toml` (se quita `version` de `tau
 
 - Archivos: `src-tauri/{Cargo.toml,Cargo.lock,tauri.conf.json}`, `src-tauri/capabilities/reader.json`, `src/components/Preferences.svelte`, `ARCHITECTURE.md`, `DECISIONES.md`, `DIFERIDOS.md`, `REGISTRO.md`, `.historial/_PLAN_VERSIONADO_completado.md`.
 - Estado: hecho y verificado; resuelve el diferido de la versión duplicada. Pendiente del titular: comprobar Acerca de en `pnpm tauri dev` y compilar `miso.exe` 1.0.0 para la Release (ver `DIFERIDOS.md`).
+
+## 2026-11-15 — Capturas en el README
+
+Capturas del titular en modo claro y oscuro movidas a `assets/screenshots/`; el README muestra la que coincide con el tema del visitante (`<picture>` + `prefers-color-scheme`).
+
+- Archivos: `assets/screenshots/{miso-light,miso-dark}.png`, `README.md`, `REGISTRO.md`.
+- Estado: hecho; sin publicar.
