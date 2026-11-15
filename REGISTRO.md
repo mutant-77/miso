@@ -263,4 +263,11 @@ SemVer desde 1.0.0 con fuente única en `Cargo.toml` (se quita `version` de `tau
 Capturas del titular en modo claro y oscuro movidas a `assets/screenshots/`; el README muestra la que coincide con el tema del visitante (`<picture>` + `prefers-color-scheme`).
 
 - Archivos: `assets/screenshots/{miso-light,miso-dark}.png`, `README.md`, `REGISTRO.md`.
-- Estado: hecho; sin publicar.
+- Estado: hecho y publicado.
+
+## 2026-11-15 — Release v1.0.0 en GitHub
+
+GitHub CLI 2.104.0 instalado (winget) y sesión iniciada por el titular. Push de `main` y de la etiqueta `v1.0.0`; Release «Miso 1.0.0» publicada con `miso.exe` (20.597.760 bytes, versión de archivo 1.0.0, compilado por el titular) y notas en inglés: https://github.com/mutant-77/miso/releases/tag/v1.0.0. Cierra el pendiente de «Versión 1.0.0».
+
+- Archivos: `DIFERIDOS.md`, `REGISTRO.md`.
+- Estado: hecho y publicado.
