@@ -1,0 +1,14 @@
+{
+  "title": "unicode.txt",
+  "initial_char_index": 0,
+  "composition": "Text",
+  "chapters": [],
+  "blocks": [
+    { "type": "Paragraph", "runs": [{ "text": "Hola 😀" }] },
+    { "type": "Paragraph", "runs": [{ "text": "中文" }] },
+    { "type": "Paragraph", "runs": [{ "text": "café xy" }] },
+    { "type": "Paragraph", "runs": [{ "text": "" }] },
+    { "type": "Paragraph", "runs": [{ "text": "fin" }] },
+    { "type": "Paragraph", "runs": [{ "text": "" }] }
+  ]
+}

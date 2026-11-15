@@ -1,0 +1,37 @@
+[package]
+name = "miso"
+version = "0.1.0"
+description = "Miso"
+edition = "2024"
+rust-version = "1.90"
+
+[lib]
+name = "miso_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-dialog = "2"
+tauri-plugin-log = "2"
+tauri-plugin-single-instance = "2"
+log = "0.4"
+thiserror = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+ts-rs = "12"
+encoding_rs = "0.8"
+codepage = "0.1"
+chardetng = "1"
+arboard = { version = "3", default-features = false }
+scraper = "0.29"
+zip = { version = "9.5.1", default-features = false, features = ["deflate-flate2-zlib-rs"] }
+quick-xml = "0.42.0"
+percent-encoding = "2.3"
+sys-locale = "0.3"
+pdfium-render = { version = "0.9.5", default-features = false, features = ["thread_safe", "pdfium_latest"] }
+
+[target.'cfg(windows)'.dependencies]
+windows = { version = "0.62", features = ["Win32_Foundation", "Win32_Graphics_DirectWrite", "Win32_Storage_FileSystem"] }
