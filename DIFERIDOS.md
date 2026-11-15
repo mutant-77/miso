@@ -17,4 +17,4 @@ Pendientes diferidos y deuda técnica secundaria. Brevedad ante todo: una línea
 - 2026-11-15 07:02 — Licencias: recorrido manual en `pnpm tauri dev` (Preferencias → Licencias: 21 entradas, foco en «Volver», seleccionar y copiar, volver, Escape cierra). Pendiente del titular (ver REGISTRO, «Avisos de licencia embebidos»).
 - 2026-11-15 07:02 — Licencias: el control de huérfanos sólo vigila `src-tauri/pdfium/licenses/`; una fuente o binario nuevo con licencia propia fuera de ahí no lo dispara. Sin fase.
 - 2026-11-15 07:02 — `Escape` cierra el panel entero desde la vista de licencias; una pila por vista sería más fina. Sin fase.
-- 2026-11-15 07:02 — La versión vive duplicada en `tauri.conf.json` y `Cargo.toml`. Sin fase.
+- 2026-11-15 — Release `v1.0.0`: el titular compila `miso.exe`; luego push de la etiqueta y Release en GitHub con el `.exe` y notas (ver REGISTRO, «Versión 1.0.0»). Pendiente del titular.

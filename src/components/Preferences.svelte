@@ -3,6 +3,7 @@
   import { setPrefs, resetPrefs, listFonts } from '../lib/ipc/commands'
   import { DARK, LIGHT } from '../lib/theme'
   import { LANGUAGES, t } from '../lib/i18n.svelte'
+  import { getVersion } from '@tauri-apps/api/app'
   import Licenses from './Licenses.svelte'
 
   type Numeric = 'font_size' | 'column_width' | 'relative_inset' | 'vertical_inset' | 'line_height'
@@ -13,6 +14,11 @@
   let back = $state<HTMLButtonElement>()
   let view = $state<'prefs' | 'licenses'>('prefs')
   const heading = $derived(view === 'prefs' ? t('prefs.title') : t('licenses.title'))
+  let version = $state('')
+  getVersion().then(
+    (v) => (version = v),
+    (err) => console.error(err),
+  )
   let installed = $state<string[]>([])
   listFonts().then(
     (all) => (installed = all),
@@ -136,6 +142,7 @@
 
       <section>
         <h2>{t('prefs.about')}</h2>
+        <span class="ancho">Miso {version}</span>
         <button type="button" class="ancho" onclick={() => (view = 'licenses')}>{t('prefs.licenses')}</button>
       </section>
 

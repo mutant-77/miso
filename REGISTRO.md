@@ -250,3 +250,10 @@ Los 21 textos de licencia (Miso, Literata, pdfium-binaries, PDFium y sus 17 bibl
 
 - Archivos: `scripts/licenses.mjs`, `package.json`, `THIRD_PARTY_NOTICES.md`, `src-tauri/pdfium/licenses/freetype.txt`, `src-tauri/src/{licenses_data,commands,lib,model}.rs`, `src/lib/ipc/types/License.ts`, `src/lib/ipc/commands.ts`, `src/components/{Licenses,Preferences}.svelte`, `locales/*.json`, `ARCHITECTURE.md`, `README.md`, `DIFERIDOS.md`, `REGISTRO.md`, `.historial/_PLAN_LICENCIAS_completado.md`.
 - Estado: hecho y verificado; resuelve el pendiente de la entrada anterior (avisos dentro del ejecutable). Recorrido visual pendiente del titular.
+
+## 2026-11-15 — Versión 1.0.0
+
+SemVer desde 1.0.0 con fuente única en `Cargo.toml` (se quita `version` de `tauri.conf.json`; Tauri la toma de Cargo). Preferencias → Acerca de muestra «Miso 1.0.0» vía `getVersion()` y el permiso `core:app:allow-version`. Reglas de subida y procedimiento en ARCHITECTURE §4; decisión en `DECISIONES.md`. Etiqueta `v1.0.0` local. Verificado: `pnpm verify` verde (unit 114, layout 77, Rust y clippy sin errores).
+
+- Archivos: `src-tauri/{Cargo.toml,Cargo.lock,tauri.conf.json}`, `src-tauri/capabilities/reader.json`, `src/components/Preferences.svelte`, `ARCHITECTURE.md`, `DECISIONES.md`, `DIFERIDOS.md`, `REGISTRO.md`, `.historial/_PLAN_VERSIONADO_completado.md`.
+- Estado: hecho y verificado; resuelve el diferido de la versión duplicada. Pendiente del titular: comprobar Acerca de en `pnpm tauri dev` y compilar `miso.exe` 1.0.0 para la Release (ver `DIFERIDOS.md`).

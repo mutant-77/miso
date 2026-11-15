@@ -89,7 +89,7 @@ Miso/
 │     ├─ EmptyState.svelte      # "abre un archivo o pega texto"
 │     └─ LoadingOverlay.svelte
 ├─ src-tauri/
-│  ├─ Cargo.toml
+│  ├─ Cargo.toml                # única fuente de la versión (tauri.conf.json no la declara)
 │  ├─ tauri.conf.json           # bundle id, CSP; sin instalador ni asociaciones; sin ventanas (las crea Rust)
 │  ├─ capabilities/
 │  │  └─ reader.json            # sólo core (eventos, ventana); sin fs, dialog, clipboard, red ni opener
@@ -125,6 +125,8 @@ Miso/
 ```
 
 **Entorno (Windows):** compilar Rust y ejecutar las puertas (`pnpm verify`, `pnpm tauri dev`) **desde PowerShell**. En Git Bash, `link.exe` resuelve al de Git (`usr/bin`) y no al enlazador MSVC. El repositorio está en un volumen exFAT: los avisos de Cargo "hard linking files in the incremental compilation cache failed" son inofensivos. Puerta única: `pnpm verify`.
+
+**Versión (SemVer):** mayor si se rompe algo que el usuario tenía (prefs o posiciones ilegibles sin migración, formato o Windows retirados); menor si hay función nueva compatible; parche si sólo hay correcciones. Procedimiento: cambiar `version` en `src-tauri/Cargo.toml` → `pnpm verify` → asiento en `REGISTRO.md` y commit «Versión X.Y.Z» → `git tag -a vX.Y.Z` → el titular compila → push de la etiqueta y Release en GitHub con `miso.exe` y notas sacadas de `REGISTRO.md`. Acerca de la muestra con `getVersion()` (permiso `core:app:allow-version`).
 
 ## 5. Contrato IPC
 
